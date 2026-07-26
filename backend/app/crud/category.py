@@ -27,8 +27,16 @@ async def read_category(session, user_id: int):
     return result.scalars().all()
 
 async def read_category_by_id(session, category_id: int, user_id: int):
-    result = await session.execute(select(CategoryModel).where(CategoryModel.id == category_id, CategoryModel.user_id == user_id))
-    return result.scalars().one_or_none()
+    result = await session.execute(select(CategoryModel).where(CategoryModel.id == category_id))
+    category = result.scalars().one_or_none()
+
+    if not category:
+        return None
+
+    if category.user_id != user_id and category.user_id is not None:
+        raise HTTPException(status_code=403, detail="Access denied")
+
+    return category
 
 ALLOWED_FIELDS = {
     "name",

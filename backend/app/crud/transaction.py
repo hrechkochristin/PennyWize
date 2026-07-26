@@ -27,8 +27,16 @@ async def read_transactions(session, user_id: int):
     return result.scalars().all()
 
 async def read_transaction_by_id(session, transaction_id: int, user_id: int):
-    result = await session.execute(select(TransactionModel).where(TransactionModel.id == transaction_id, TransactionModel.user_id == user_id))
-    return result.scalars().one_or_none()
+    result = await session.execute(select(TransactionModel).where(TransactionModel.id == transaction_id))
+    transaction = result.scalars().one_or_none()
+
+    if not transaction:
+        return None
+
+    if transaction.user_id != user_id:
+        raise HTTPException(status_code=403, detail="Access denied")
+
+    return transaction
 
 ALLOWED_FIELDS = {
     "name",

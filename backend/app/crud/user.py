@@ -1,59 +1,71 @@
-from fastapi import HTTPException
-from sqlalchemy import select
+from fastapi import Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer
+from jose import JWTError, jwt
 
-from backend.app.models.user import UserModel
-from backend.app.schemas.user import UserAddSchema
+from sqlalchemy import select, insert
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from pwdlib import PasswordHash
+from backend.app.core.database import get_session
+from backend.app.core.jwt import create_access_token, SECRET_KEY, ALGORITHM
+from backend.app.core.password import verify_password, hash_password
+from backend.app.models import UserModel
 
-password_hash = PasswordHash.recommended()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
 
+async def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    session: AsyncSession = Depends(get_session)
+):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id: str = payload.get("sub")
 
-def hash_password(password: str) -> str:
-    return password_hash.hash(password)
+        if user_id is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
 
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
-def verify_password(password: str, hashed_password: str) -> bool:
-    return password_hash.verify(password, hashed_password)
-
-async def create_user(session, data: UserAddSchema):
-    new_user = UserModel(
-        username=data.username,
-        email=data.email,
-        password_hash=hash_password(data.password)
+    result = await session.execute(
+        select(UserModel).where(UserModel.id == int(user_id))
     )
+    user = result.scalar_one_or_none()
+
+    if user is None:
+        raise HTTPException(status_code=401, detail="User not found")
+
+    return user
+
+async def signup_user(user_data, session):
+    result = await session.execute(select(UserModel).where(UserModel.username == user_data.username))
+    user = result.scalar_one_or_none()
+    if user is not None:
+        raise HTTPException(status_code=400, detail="Username already exists")
+
+    result = await session.execute(select(UserModel).where(UserModel.email == user_data.email))
+    email = result.scalar_one_or_none()
+    if email is not None:
+        raise HTTPException(status_code=400, detail="Email already exists")
+
+    new_user = UserModel(username=user_data.username, email=user_data.email, password_hash=hash_password(user_data.password))
     session.add(new_user)
     await session.commit()
     await session.refresh(new_user)
-    return new_user
 
-async def read_user(session):
-    result = await session.execute(select(UserModel))
-    return result.scalars().all()
+    token = create_access_token({"sub": str(new_user.id)})
 
-async def read_user_by_id(session, user_id: int):
-    result = await session.execute(select(UserModel).where(UserModel.id == user_id))
-    return result.scalars().one_or_none()
+    return {"access_token": token, "token_type": "bearer"}
 
-ALLOWED_FIELDS = {
-    "username",
-    "email",
-    "password"
-}
+async def login_user(form_data, session):
+    result = await session.execute(select(UserModel).where(UserModel.username == form_data.username))
+    user = result.scalar_one_or_none()
 
-async def update_user_by_id(session, user_id: int, component_name: str, new_data: str):
-    result = await session.execute(select(UserModel).where(UserModel.id == user_id))
-    user = result.scalars().one_or_none()
+    if user is None:
+        raise HTTPException(status_code=401, detail="Incorrect username or password")
 
-    if not user:
-        return None
+    if not verify_password(form_data.password, user.password_hash):
+        raise HTTPException(status_code=401, detail="Incorrect username or password")
 
-    if component_name not in ALLOWED_FIELDS:
-        raise HTTPException(status_code=400, detail="Invalid field")
+    token = create_access_token({"sub": str(user.id)})
 
-    setattr(user, component_name, new_data)
-
-    await session.commit()
-    await session.refresh(user)
-
-    return user
+    return {"access_token": token, "token_type": "bearer"}
