@@ -9,6 +9,9 @@ from sqlalchemy.ext.asyncio import (
 from backend.app.core.config import DATABASE_URL
 from backend.app.models.base import Base
 
+limit: int = 50
+offset: int = 0
+
 engine = create_async_engine(
     DATABASE_URL,
     echo=True,

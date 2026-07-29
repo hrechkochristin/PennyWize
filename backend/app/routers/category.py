@@ -9,17 +9,17 @@ from backend.app.core.database import SessionDep
 
 router = APIRouter(prefix="/categories", tags=["Categories"])
 # Creating custom user's category
-@router.post("", response_model=CategorySchema)
+@router.post("/", response_model=CategorySchema)
 async def add_category(data: CategoryAddSchema, session: SessionDep, current_user: UserModel = Depends(get_current_user)):
     return await create_category(session, current_user.id, data)
 
 # Reading all user's categories including custom and default
-@router.get("", response_model=list[CategorySchema])
+@router.get("/", response_model=list[CategorySchema])
 async def get_category(session: SessionDep, current_user: UserModel = Depends(get_current_user)):
     return await read_category(session, current_user.id)
 
 # Deleting all user's custom categories
-@router.delete("", response_model=bool)
+@router.delete("/", response_model=bool)
 async def remove_category(session: SessionDep, current_user: UserModel = Depends(get_current_user)):
     return await delete_category(session, current_user.id)
 

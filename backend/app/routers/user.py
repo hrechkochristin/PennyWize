@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from backend.app.crud.user import login_user, signup_user, get_current_user
+from backend.app.crud.user import login_user, signup_user, get_current_user, read_users
 from backend.app.models import UserModel
 from backend.app.schemas.user import UserSignUpSchema
 from backend.app.core.database import SessionDep, get_session
@@ -23,3 +23,11 @@ async def get_me(current_user: UserModel = Depends(get_current_user)):
         "username": current_user.username,
         "email": current_user.email
     }
+
+@router.get("/")
+async def get_users(
+        session: SessionDep,
+        current_user: UserModel = Depends(get_current_user),
+        custom_limit: int | None = None,
+        role: str | None = None):
+    return await read_users(current_user, session, custom_limit, role)

@@ -14,6 +14,7 @@ class TransactionAddSchema(BaseModel):
 
 class TransactionSchema(TransactionAddSchema):
     id: int
+    date: datetime
 
     class Config:
         from_attributes = True

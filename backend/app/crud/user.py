@@ -5,7 +5,7 @@ from jose import JWTError, jwt
 from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.core.database import get_session
+from backend.app.core.database import get_session, limit
 from backend.app.core.jwt import create_access_token, SECRET_KEY, ALGORITHM
 from backend.app.core.password import verify_password, hash_password
 from backend.app.models import UserModel
@@ -69,3 +69,20 @@ async def login_user(form_data, session):
     token = create_access_token({"sub": str(user.id)})
 
     return {"access_token": token, "token_type": "bearer"}
+
+
+async def read_users(user_data, session, custom_limit=None, role=None):
+    if user_data.role != "developer" and user_data.role != "admin":
+        raise HTTPException(status_code=403, detail="Access denied")
+
+    query = select(UserModel)
+
+    if custom_limit is None:
+        custom_limit = limit
+
+    if role is not None:
+        query = query.where(UserModel.role == role)
+
+    result = await session.execute(query.limit(custom_limit))
+
+    return result.scalars().all()

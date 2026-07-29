@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy import select, delete
 
+from backend.app.core.database import offset, limit
 from backend.app.models import CategoryModel
 from backend.app.schemas.category import CategoryAddSchema
 
@@ -22,9 +23,15 @@ async def create_category(session, user_id: int,  data: CategoryAddSchema):
 async def read_category(session, user_id: int):
     result = await session.execute(select(CategoryModel).where(
     (CategoryModel.user_id == user_id) |
-    (CategoryModel.user_id.is_(None))
+    (CategoryModel.user_id.is_(None)).limit(limit).offset(offset)
 ))
     return result.scalars().all()
+
+async def delete_category(session, user_id: int):
+    result = await session.execute(delete(CategoryModel).where(CategoryModel.user_id == user_id))
+    await session.commit()
+
+    return bool(result.rowcount)
 
 async def read_category_by_id(session, category_id: int, user_id: int):
     result = await session.execute(select(CategoryModel).where(CategoryModel.id == category_id))
@@ -70,9 +77,3 @@ async def delete_category_by_id(session, category_id: int, user_id: int):
     await session.commit()
 
     return result.rowcount
-
-async def delete_category(session, user_id: int):
-    result = await session.execute(delete(CategoryModel).where(CategoryModel.user_id == user_id))
-    await session.commit()
-
-    return bool(result.rowcount)
