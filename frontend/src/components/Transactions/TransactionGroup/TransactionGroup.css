@@ -1,0 +1,91 @@
+.TransactionGroup {
+    width: 100%;
+
+    padding: 20px;
+
+    background: #fafafa;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 18px;
+
+    box-sizing: border-box;
+}
+
+
+.TransactionGroupHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 14px;
+}
+
+
+.TransactionDate {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #333333;
+}
+
+
+/* Statistics */
+
+.TransactionStats {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: 3px;
+}
+
+
+.TransactionStat {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 12px;
+}
+
+
+.StatIncome {
+    color: #5c9671;
+}
+
+
+.StatExpense {
+    color: #777777;
+}
+
+
+.StatBalance {
+    font-weight: 600;
+}
+
+
+.StatBalance.positive {
+    color: #4f8f68;
+}
+
+
+.StatBalance.negative {
+    color: #a66b6b;
+}
+
+
+/* Transaction cards */
+
+.TransactionGroupCards {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}

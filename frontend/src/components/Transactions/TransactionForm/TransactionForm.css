@@ -1,0 +1,304 @@
+
+.TransactionForm {
+    width: 100%;
+
+    margin: 0;
+
+    padding: 32px;
+
+    box-sizing: border-box;
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    box-shadow: var(--shadow);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+
+/* Header */
+
+.TransactionFormHeader {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 4px;
+}
+
+.TransactionFormIcon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    font-size: 21px;
+}
+
+.TransactionFormHeader h2 {
+    margin: 0;
+
+    color: var(--text-h);
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.TransactionFormHeader p {
+    margin: 3px 0 0;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+}
+
+
+/* Fields */
+
+.TransactionFormField {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    min-width: 0;
+}
+
+.TransactionFormField label {
+    color: var(--text-h);
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+.TransactionForm input,
+.TransactionForm textarea,
+.TransactionForm select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    background: #F8FCF6;
+
+    color: var(--text-h);
+
+    font-family: var(--sans);
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.TransactionForm textarea {
+    resize: vertical;
+
+    min-height: 80px;
+}
+
+
+.TransactionForm input:focus,
+.TransactionForm textarea:focus,
+.TransactionForm select:focus {
+    background: #F4FAF1;
+
+    border-color: var(--category-color);
+
+    box-shadow:
+        0 0 0 3px
+        color-mix(
+            in srgb,
+            var(--category-color) 20%,
+            transparent
+        );
+}
+
+
+/* Two fields in one row */
+
+.TransactionFormRow {
+    display: grid;
+
+    grid-template-columns: 1fr 140px;
+
+    gap: 12px;
+}
+
+
+/* Income / Expense */
+
+.TransactionType {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+}
+
+
+.TransactionTypeButton {
+    height: 42px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    background: #F8FCF6;
+
+    color: var(--text);
+
+    font-family: var(--sans);
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.TransactionTypeButton:hover {
+    background: #F2F8EF;
+}
+
+
+.TransactionTypeButton.active.expense {
+    border-color: #D9BABA;
+
+    background: #FAF3F3;
+
+    color: #8D5D5D;
+}
+
+
+.TransactionTypeButton.active.income {
+    border-color: #BFD9C7;
+
+    background: #F1F8F2;
+
+    color: #4F8F68;
+}
+
+
+/* Error */
+
+.TransactionFormError {
+    margin: 0;
+
+    padding: 10px 12px;
+
+    border-radius: 9px;
+
+    background: #FBF3F3;
+
+    color: #9A6464;
+
+    font-size: 13px;
+}
+
+
+/* Loading */
+
+.TransactionFormLoading {
+    margin: 0;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+}
+
+
+/* Submit */
+
+.TransactionSubmit {
+    width: 100%;
+
+    min-height: 46px;
+
+    margin-top: 4px;
+
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: var(--accent);
+
+    color: var(--text-h);
+
+    font-family: var(--sans);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.TransactionSubmit:hover {
+    background: var(--accent-hover);
+
+    transform: translateY(-1px);
+}
+
+
+.TransactionSubmit:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .TransactionForm {
+        width: calc(100% - 32px);
+
+        padding: 24px 20px;
+
+        margin: 24px auto;
+    }
+
+
+    .TransactionFormRow {
+        grid-template-columns: 1fr;
+    }
+
+}

@@ -1,0 +1,103 @@
+.TransactionCard {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 14px 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+    border-left: 3px solid var(--category-color);
+
+    border-radius: 12px;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.TransactionCard:hover {
+    transform: translateY(-1px);
+
+    border-color: #e5e5e5;
+    border-left-color: var(--category-color);
+}
+
+
+/* Category icon */
+
+.TransactionCardIcon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: color-mix(
+        in srgb,
+        var(--category-color) 18%,
+        #ffffff
+    );
+
+    font-size: 20px;
+}
+
+
+/* Transaction information */
+
+.TransactionInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+
+.TransactionInfo h3 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #252525;
+}
+
+
+.TransactionInfo p {
+    margin: 4px 0 0;
+
+    font-size: 13px;
+
+    color: #888888;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* Amount */
+
+.Income,
+.Expense {
+    font-size: 15px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.Income {
+    color: #4f8f68;
+}
+
+
+.Expense {
+    color: #333333;
+}

@@ -1,0 +1,86 @@
+:root {
+  /* Colors - Verdant Reserve Theme */
+  --bg-page: #FAFBF8; /* Warm white background */
+  --bg-card: #FFFFFF;
+
+  --text-h: #333333; /* Dark gray for headers */
+  --text: #7A7A7A;   /* Secondary gray for body */
+  --text-muted: #98A296;
+
+  --border: #F1F3F2; /* Subtle light gray border */
+  --input-bg: #FFFFFF;
+
+  --accent: #CBE7C2;       /* Soft pastel green */
+  --accent-hover: #B6D4AE; /* Sage green for hover */
+
+  --shadow: 0 8px 32px rgba(182, 212, 174, 0.1);
+
+  --sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+
+  font: 14px/150% var(--sans);
+  color: var(--text);
+  background: var(--bg-page);
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+}
+
+:root {
+  /* Colors - Verdant Reserve Theme */
+  --bg-page: #FAFBF8;
+  --bg-card: #FFFFFF;
+  --text-h: #333333;
+  --text: #7A7A7A;
+  --accent: #CBE7C2;
+  --accent-hover: #B6D4AE;
+  --border: #F1F3F2;
+  --shadow: 0 8px 32px rgba(182, 212, 174, 0.1);
+  --sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: var(--sans);
+    color: var(--text);
+
+    background: var(--bg-page);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+main {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+  color: var(--text-h);
+  font-family: var(--sans);
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+}

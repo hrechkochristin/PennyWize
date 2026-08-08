@@ -23,7 +23,7 @@ async def create_category(session, user_id: int,  data: CategoryAddSchema):
 async def read_category(session, user_id: int):
     result = await session.execute(select(CategoryModel).where(
     (CategoryModel.user_id == user_id) |
-    (CategoryModel.user_id.is_(None)).limit(limit).offset(offset)
+    (CategoryModel.user_id.is_(None))
 ))
     return result.scalars().all()
 

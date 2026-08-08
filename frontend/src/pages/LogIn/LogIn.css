@@ -1,0 +1,110 @@
+.LoginBlock {
+  width: min(100% - 40px, 440px);
+  margin: 60px auto;
+  box-sizing: border-box;
+
+  max-width: 440px;
+  background: var(--bg-card);
+  padding: 48px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.Logo {
+  width: 64px;
+  height: 64px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+  padding: 12px;
+  box-sizing: border-box;
+
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.LoginForm label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-h);
+  margin-left: 4px;
+  margin-bottom: -10px; /* Bring label closer to its input */
+}
+
+.LoginForm input {
+  font-family: var(--sans);
+  font-size: 15px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  background: #FFFFFF;
+  border-radius: 12px;
+  color: var(--text-h);
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.LoginForm input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(203, 231, 194, 0.2);
+}
+
+.LoginForm input:-webkit-autofill,
+.LoginForm input:-webkit-autofill:hover,
+.LoginForm input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-h);
+
+    -webkit-box-shadow: 0 0 0 1000px #F8FCF6 inset;
+
+    box-shadow: 0 0 0 1000px #F8FCF6 inset;
+
+    border: 1px solid var(--border);
+}
+
+/* Link/Footer styles */
+label[for="login"] {
+  font-size: 13px;
+  color: var(--text);
+  margin-top: 16px;
+  display: block;
+}
+
+label[for="login"] a {
+  color: #729B65;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+label[for="login"] a:hover {
+  text-decoration: underline;
+}
+
+/* Handle generic spacing */
+br {
+  display: none; /* Hide manual line breaks in favor of flex gap */
+}
+
+/* Responsive adjustment */
+@media (max-width: 480px) {
+  .LoginBlock {
+    padding: 40px 24px;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    min-height: 100vh;
+  }
+}

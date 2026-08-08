@@ -2,6 +2,7 @@ from datetime import datetime
 
 from fastapi import HTTPException
 from sqlalchemy import select, delete, desc, asc
+from sqlalchemy.orm import selectinload
 
 from backend.app.core.database import offset, limit
 from backend.app.core.range import RangeField, RangeFieldType, RANGE_FIELDS
@@ -37,7 +38,9 @@ def convert_value(value, range_by):
     return RangeFieldType[range_by.value](value)
 
 async def read_transactions(session, user_id: int, sort_by, order, range_by, min_value, max_value, type=None, currency=None, category_id=None):
-    query = select(TransactionModel).where(TransactionModel.user_id == user_id)
+    query = (select(TransactionModel)
+        .options(selectinload(TransactionModel.category))
+        .where(TransactionModel.user_id == user_id))
 
     if type is not None:
         query = query.where(TransactionModel.type == type)

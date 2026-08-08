@@ -77,6 +77,9 @@ async def read_users(user_data, session, custom_limit=None, role=None):
 
     query = select(UserModel)
 
+    if custom_limit <= 0:
+        raise HTTPException(status_code=401, detail="Incorrect value")
+
     if custom_limit is None:
         custom_limit = limit
 

@@ -1,0 +1,31 @@
+/* Assuming Button component renders a class named 'button' or similar */
+/* Based on DOCUMENT_2 and DOCUMENT_9 */
+
+.button, button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--sans);
+  color: #333333;
+  background-color: var(--accent);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(182, 212, 174, 0.2);
+  width: 100%; /* Match form width */
+  margin-top: 8px;
+}
+
+.button:hover, button:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(182, 212, 174, 0.3);
+}
+
+.button:active, button:active {
+  transform: scale(0.98);
+}

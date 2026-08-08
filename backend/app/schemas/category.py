@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+
 
 class CategoryAddSchema(BaseModel):
     name: str
@@ -12,3 +13,12 @@ class CategorySchema(CategoryAddSchema):
     
     class Config:
         from_attributes = True
+
+class CategoryResponseSchema(BaseModel):
+    id: int
+    name: str
+    description: str | None
+    icon: str | None
+    color: str
+
+    model_config = ConfigDict(from_attributes=True)

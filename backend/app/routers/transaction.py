@@ -6,7 +6,7 @@ from backend.app.crud.transaction import create_transaction, read_transactions, 
     update_transaction_by_id, delete_transaction_by_id, delete_transactions
 from backend.app.crud.user import get_current_user
 from backend.app.models import UserModel
-from backend.app.schemas.transaction import TransactionSchema, TransactionAddSchema
+from backend.app.schemas.transaction import TransactionSchema, TransactionAddSchema, TransactionResponseSchema
 from backend.app.core.database import SessionDep
 
 router = APIRouter(prefix="/transactions", tags=["Transactions"])
@@ -17,7 +17,7 @@ async def add_transaction(data: TransactionAddSchema, session: SessionDep, curre
     return await create_transaction(session, data, current_user.id)
 
 # Reading all user's custom transactions
-@router.get("/", response_model=list[TransactionSchema])
+@router.get("/", response_model=list[TransactionResponseSchema])
 async def get_transactions(
         session: SessionDep,
         current_user: UserModel = Depends(get_current_user),
